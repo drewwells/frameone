@@ -10,9 +10,12 @@ test( "Event bound", function(){
     function handler(){
         fuck = true;
     }
+    //Test binding
     var div = $("div.test").on('click',handler);
     div[0].dispatchEvent(new Event('click'));
     equal(fuck,true);
+
+    //Test unbinding
     fuck = false;
     div.off('click',handler);
     div[0].dispatchEvent(new Event('click'));
