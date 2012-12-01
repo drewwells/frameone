@@ -1,6 +1,8 @@
-var Z = Object.create([].__proto__),
+var Z = Object.create(Object.create([].__proto__)),
     $ = function(selector) {
-        return Z.slice.apply(document.querySelectorAll(selector));
+        var arr = Z.slice.apply(document.querySelectorAll(selector));
+        arr.__proto__ = Z.fn;
+        return arr;
     };
 
 
@@ -15,16 +17,22 @@ Z.extend = function(obj, props) {
         obj[key] = props[key];
     }
 };
+Z.slice = Array.prototype.slice;
 
 Z.extend(Z.fn,{
     on: function(type, fn) {
-        return this.forEach(function() {
-            this.addEventListener(type, fn);
+        this.forEach(function( n ){
+            n.addEventListener(type, fn);
         });
+        return this;
     },
     off: function(type, fn) {
-        return this.forEach(function() {
-            this.removeEventListener(type, fn);
+        this.forEach(function( n ) {
+            n.removeEventListener(type, fn);
         });
+        return this;
+    },
+    trigger: function(type){
+
     }
 });
