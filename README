@@ -1,1 +1,14 @@
-touch
+Framework One is an all compromise DOM library.  The shortest path to a feature is taken, so you should shim things for browsers you want to support.  Below are a list of browsers technically supported and the reasons lower versions are not supported.
+
+* Safari 5+
+     classList
+* Chrome 5+
+     Object.create
+* Firefox 4+
+     Object.create
+* Opera 11.60
+     Object.create
+* IE 10+
+     classList, isArray
+
+Opera Mini classList

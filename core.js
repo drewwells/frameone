@@ -18,6 +18,7 @@ A,S,O,AP,SP;
 
 Z.fn = Z.__proto__,
 
+//Really this is a mixin, but who's keep score?
 Z.extend = function(obj, props) {
     if (!props) {
         props = obj;
