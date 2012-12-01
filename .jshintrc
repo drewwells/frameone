@@ -9,5 +9,6 @@
   "trailing": true,
   "undef": true,
   "proto": true,
-  "browser": true
+  "browser": true,
+  "unused": true
 }

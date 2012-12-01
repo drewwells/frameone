@@ -1,12 +1,23 @@
-var Z = Object.create(Object.create([].__proto__)),
-    $ = function(selector) {
-        var arr = Z.slice.apply(document.querySelectorAll(selector));
-        arr.__proto__ = Z.fn;
-        return arr;
-    };
+/*global Event:true */
 
+var Z = Object.create(Object.create([].__proto__));
+
+//Factory
+window.$ = function(selector) {
+    return Z.slice(document.querySelectorAll(selector));
+};
+
+//Shortcuts
+var A = Array,
+    S = String,
+    O = Object,
+    AP = [],
+    SP = "";
+//Remove any that don't get used in the end
+A,S,O,AP,SP;
 
 Z.fn = Z.__proto__,
+
 Z.extend = function(obj, props) {
     if (!props) {
         props = obj;
@@ -17,22 +28,41 @@ Z.extend = function(obj, props) {
         obj[key] = props[key];
     }
 };
-Z.slice = Array.prototype.slice;
+
+Z.extend(Z,{
+    slice: function( arrayLike ){
+        var newArray = AP.slice.call(arrayLike);
+        newArray.__proto__ = Z.fn;
+        return newArray;
+    }
+});
 
 Z.extend(Z.fn,{
     on: function(type, fn) {
-        this.forEach(function( n ){
-            n.addEventListener(type, fn);
+        this.forEach(function( ele ){
+            ele.addEventListener(type, fn);
         });
-        return this;
+        //return this;
     },
     off: function(type, fn) {
-        this.forEach(function( n ) {
-            n.removeEventListener(type, fn);
+        this.forEach(function( ele ) {
+            ele.removeEventListener(type, fn);
         });
-        return this;
+        //return this;
     },
     trigger: function(type){
-
+        this.forEach(function( ele ){
+            ele.dispatchEvent( new Event(type) );
+        });
+        //return this;
+    },
+    'class': function( list ){
+        list = list.split(" ");
+        this.forEach(function( n ){
+            list.forEach(function( l ){
+                n.classList.toggle( l );
+            });
+        });
+        //return this;
     }
 });

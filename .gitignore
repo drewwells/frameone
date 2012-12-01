@@ -1,1 +1,5 @@
 node_modules
+dist
+dist.js
+dist.min.js
+dist.min.js.gzip
