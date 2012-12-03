@@ -1,9 +1,10 @@
 /*global Event:true */
+(function(window){
 
 var Z = Object.create(Object.create([].__proto__));
 
 //Factory
-window.$ = function(selector) {
+var $ = window.$ = Z.$ = function(selector) {
     return Z.slice(document.querySelectorAll(selector));
 };
 
@@ -16,13 +17,14 @@ var A = Array,
 //Remove any that don't get used in the end
 A,S,O,AP,SP;
 
-Z.fn = Z.__proto__,
+$.fn = Z.fn = Z.__proto__,
 
 //Really this is a mixin, but who's keep score?
 Z.extend = function(obj, props) {
+
     if (!props) {
         props = obj;
-        obj = Z;
+        obj = $;
     }
 
     for (var key in props) {
@@ -35,7 +37,8 @@ Z.extend(Z,{
         var newArray = AP.slice.call(arrayLike);
         newArray.__proto__ = Z.fn;
         return newArray;
-    }
+    },
+    empty: function(){}
 });
 
 Z.extend(Z.fn,{
@@ -67,3 +70,58 @@ Z.extend(Z.fn,{
         //return this;
     }
 });
+
+/*{
+    type: '',
+    url: '',
+    data: '',
+    complete: '',
+    success: ''
+}*/
+//Ajax
+(function(Z){
+
+var id = 0;
+
+var xhr = function(){
+
+    return new window.XMLHttpRequest();
+};
+
+var jsonp = function(){
+
+    var cbname = 'jsonp' + ++id,
+        script = document.createElement('script');
+
+    var abort = function(){
+        document.head.removeChild( script );
+        if( window[cbName] ){
+            window[cbName] = Z.empty;
+        }
+    }
+
+}
+
+Z.param = function( obj, ret ){
+    var prop;
+    if( !ret ){ ret = ""; }
+
+    for( prop in obj){
+        if( A.isArray( obj[prop] ) ){
+            ret += prop + '[]=' + obj[prop].join('&' + prop + '[]=');
+        }
+    }
+    return ret;
+}
+
+Z.ajax = function(){
+
+
+};
+
+})(Z);
+
+//Copy properties from Z to $
+Z.extend($,Z);
+
+})(this);
