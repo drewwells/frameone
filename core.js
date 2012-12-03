@@ -38,7 +38,11 @@ Z.extend(Z,{
         newArray.__proto__ = Z.fn;
         return newArray;
     },
-    empty: function(){}
+    empty: function(){},
+    //Return internal class of object
+    type: function( typeless ){
+        return O.prototype.toString.call( typeless );
+    }
 });
 
 Z.extend(Z.fn,{
